@@ -1,245 +1,1051 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- ============================================================
-  BAND WEBSITE — single-file template
-  HOW TO EDIT (search for "✏️" in this file):
-   • Band name ......... nav brand, hero title, footer © , <title>
-   • Hero photo/video .. section id="hero"
-   • Shows ............. section id="shows"
-   • Videos / player ... section id="music"
-   • Repertoire ......  section id="repertoire" (chips have data-decade)
-   • About + members ... section id="about"
-   • Gallery .........  section id="gallery" (data-cap = caption)
-   • Contact form .... section id="contact" (wire to your backend/Formspree)
-   • Colors ........... :root variables in <style> below
-============================================================ -->
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Withered Roses - covers and originals</title> <!-- ✏️ EDIT: title -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Withered Roses - Covers & Originals</title>
 <meta name="description" content="A band that rocks from the 60s to today.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎸</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
-/* ---------- THEME (✏️ EDIT colors here) ---------- */
-:root{
-  --bg:#0b0b0e;      --panel:#141419;   --line:#26262e;
-  --text:#f2f0eb;    --muted:#a5a29b;   --accent:#ff3d2e;
-  --nav-h:72px;
+/* ========== THEME & VARIABLES ========== */
+:root {
+  --bg-deep: #08080a;
+  --bg-dark: #0d0d10;
+  --bg-panel: #141419;
+  --bg-card: #1a1a21;
+  --line: #26262e;
+  --text: #f5f3ef;
+  --text-muted: #8a8780;
+  --accent: #ff3d2e;
+  --accent-glow: rgba(255, 61, 46, 0.4);
+  --nav-h: 72px;
+  
+  /* Animations */
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 }
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 16px)}
-body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.55}
-img,svg{display:block;max-width:100%}
-a{color:inherit}
-.display{font-family:'Oswald','Arial Narrow',sans-serif;text-transform:uppercase;letter-spacing:.04em}
-.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
-section{padding:76px 0;border-top:1px solid var(--line)}
-h2.display{font-size:clamp(1.8rem,3.5vw,2.6rem);margin-bottom:28px;font-weight:600}
-.hint{color:var(--muted);font-size:.8rem;text-transform:uppercase;letter-spacing:.12em}
 
-/* ---------- NAV (sticky) ---------- */
-.nav{position:sticky;top:0;z-index:50;height:var(--nav-h);display:flex;align-items:center;
-  background:rgba(11,11,14,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.nav .wrap{width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px}
-.brand{font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
-  font-size:1.25rem;color:var(--accent);text-decoration:none}
-.nav ul{display:flex;flex-wrap:wrap;gap:4px 26px;list-style:none}
-.nav a{text-decoration:none;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.08em;font-size:.9rem;color:var(--muted)}
-.nav a:hover{color:var(--text)}
+/* ========== RESET & BASE ========== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* ---------- BUTTONS ---------- */
-.btn{display:inline-flex;align-items:center;gap:10px;padding:13px 26px;border-radius:4px;text-decoration:none;
-  font-family:'Oswald',sans-serif;font-size:.95rem;text-transform:uppercase;letter-spacing:.1em;cursor:pointer;border:1px solid transparent}
-.btn-primary{background:var(--accent);color:#fff}
-.btn-ghost{border-color:var(--line);color:var(--text)}
-.btn:hover{filter:brightness(1.12)}
-
-/* ---------- HERO ---------- */
-#hero{min-height:calc(100svh - var(--nav-h));display:flex;align-items:center;text-align:center;border-top:none;position:relative;
-  /* ✏️ EDIT hero photo: replace this background with e.g. url('images/hero.jpg') center/cover, or use the <video> tag below */
-  background:
-    radial-gradient(1200px 620px at 50% -10%, rgba(255,61,46,.38), transparent 60%),
-    repeating-linear-gradient(115deg, rgba(255,255,255,.035) 0 2px, transparent 2px 16px),
-    linear-gradient(#12121a,#0b0b0e);
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--nav-h) + 16px);
 }
-#hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover} /* ✏️ EDIT: uncomment & set src for looping hero video */
-.hero-inner{position:relative;z-index:2;padding:40px 20px}
-.hero-tagline{color:var(--muted);font-size:clamp(1rem,2vw,1.35rem);margin-bottom:36px;letter-spacing:.06em}
-#hero h1.display{font-size:clamp(3rem,11vw,7.5rem);line-height:1;font-weight:700;margin-bottom:8px;color:#fff;text-shadow:0 4px 30px rgba(255,61,46,.35)}
-.hero-cta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
 
-/* ---------- SHOWS ---------- */
-.show-row{display:grid;grid-template-columns:110px 1fr auto;align-items:center;gap:18px;padding:18px 4px;border-bottom:1px solid var(--line)}
-.show-date{font-family:'Oswald',sans-serif;font-size:1.35rem;color:var(--accent);white-space:nowrap}
-details.past-summary, details .show-more summary{cursor:pointer;list-style:none;padding:14px 4px;color:var(--muted);
-  font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.08em}
-details summary::-webkit-details-marker{display:none}
-.show-more[open] summary, details.past-summary[open] summary{color:var(--text)}
-.show-note{padding:6px 4px 14px;color:var(--muted);font-size:.92rem}
+body {
+  background: var(--bg-deep);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.7;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
 
-/* ---------- MUSIC / VIDEOS ---------- */
-.video-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;margin-bottom:26px}
-.video-card{aspect-ratio:16/9;border-radius:6px;background:linear-gradient(140deg,#1b1b24,#101016);border:1px solid var(--line);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color
+::selection {
+  background: var(--accent);
+  color: #fff;
+}
 
-/* ---------- GALLERY ---------- */
-.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px}
-.gallery-item{position:relative;border-radius:4px;overflow:hidden}
-.gallery-item img{width:100%;height:auto;display:block}
-.gallery-caption{position:absolute;bottom:0;left:0;width:100%;background:rgba(0,0,0,.7);color:#fff;padding:8px;font-size:.9rem;text-align:center}
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
 
-/* ---------- CONTACT FORM ---------- */
-.contact-form{max-width:500px;margin:0 auto}
-.contact-form input, .contact-form textarea{width:100%;padding:12px;border-radius:4px;border:none;resize:none;margin-bottom:16px;font-size:.9rem}
-.contact-form button{width:100%;padding:13px 26px;border-radius:4px;background-color:#ff3d2e;color:#fff;border:none;cursor:pointer;font-family:'Oswald',sans-serif;font-size:.95rem;text-transform:uppercase;letter-spacing:.1em}
+/* ========== TYPOGRAPHY ========== */
+h1, h2, h3, .display {
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.section-title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  margin-bottom: 16px;
+  position: relative;
+  display: inline-block;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 60px;
+  height: 4px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+.section-subtitle {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  margin-bottom: 48px;
+  max-width: 600px;
+}
+
+/* ========== LAYOUT UTILITIES ========== */
+.wrap {
+  width: min(92%, 1180px);
+  margin-inline: auto;
+}
+
+.section {
+  padding: clamp(80px, 12vh, 140px) 0;
+  position: relative;
+}
+
+/* ========== SCROLL REVEAL ANIMATIONS ========== */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger children */
+.stagger > * {
+  transition-delay: calc(var(--i, 0) * 0.1s);
+}
+
+/* ========== NAVIGATION ========== */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: var(--nav-h);
+  display: flex;
+  align-items: center;
+  background: rgba(8, 8, 10, 0.85);
+  backdrop-filter: blur(24px) saturate(1.2);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
+  border-bottom: 1px solid var(--line);
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.nav.hidden {
+  transform: translateY(-100%);
+}
+
+.nav .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.brand {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 1.4rem;
+  color: var(--accent);
+  transition: all 0.3s ease;
+}
+
+.brand:hover {
+  text-shadow: 0 0 20px var(--accent-glow);
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 8px;
+}
+
+.nav-link {
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  padding: 8px 14px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover, .nav-link.active {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Mobile menu toggle */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.menu-toggle span {
+  width: 24px;
+  height: 2px;
+  background: var(--text);
+  transition: all 0.3s ease;
+}
+
+/* ========== HERO SECTION ========== */
+.hero {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding-top: var(--nav-h);
+}
+
+/* Animated background layers */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-gradient-1 {
+  position: absolute;
+  top: -20%;
+  left: -10%;
+  width: 70%;
+  height: 80%;
+  background: radial-gradient(ellipse at center, rgba(255, 61, 46, 0.3) 0%, transparent 60%);
+  animation: floatA 12s ease-in-out infinite;
+}
+
+.hero-gradient-2 {
+  position: absolute;
+  bottom: -20%;
+  right: -10%;
+  width: 70%;
+  height: 80%;
+  background: radial-gradient(ellipse at center, rgba(147, 51, 234, 0.2) 0%, transparent 60%);
+  animation: floatB 14s ease-in-out infinite;
+}
+
+@keyframes floatA {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(30px, -20px) scale(1.1); }
+}
+
+@keyframes floatB {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-20px, 30px) scale(1.05); }
+}
+
+/* Grid overlay */
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* Floating particles */
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.3;
+  animation: particleFloat linear infinite;
+}
+
+@keyframes particleFloat {
+  0% { transform: translateY(100vh) scale(0); }
+  50% { transform: translateX(var(--drift)) scale(1); }
+  100% { transform: translateY(-20px) scale(0); opacity: 0; }
+}
+
+/* Hero content */
+.hero-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 40px 20px;
+  max-width: 900px;
+}
+
+.hero-title {
+  font-size: clamp(3rem, 14vw, 8.5rem);
+  line-height: 0.9;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #fff;
+  animation: heroTitleIn 1s var(--ease-out-expo) forwards;
+  text-shadow: 0 4px 40px rgba(255, 61, 46, 0.3);
+}
+
+@keyframes heroTitleIn {
+  from { opacity: 0; transform: translateY(40px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.hero-tagline {
+  font-size: clamp(1rem, 2.2vw, 1.5rem);
+  color: var(--text-muted);
+  margin-bottom: 48px;
+  letter-spacing: 0.06em;
+  animation: heroFadeIn 1s 0.3s var(--ease-out-expo) forwards;
+  opacity: 0;
+}
+
+@keyframes heroFadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-cta {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: heroFadeIn 1s 0.5s var(--ease-out-expo) forwards;
+  opacity: 0;
+}
+
+/* ========== BUTTONS ========== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 32px;
+  border-radius: 8px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s var(--ease-in-out);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(255, 61, 46, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(255, 61, 46, 0.5);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--line);
+}
+
+.btn-ghost:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+  box-shadow: 0 4px 20px rgba(255, 61, 46, 0.15);
+}
+
+/* Button ripple effect */
+.btn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+}
+
+.btn:active::after {
+  width: 300px;
+  height: 300px;
+}
+
+/* ========== SHOWS SECTION ========== */
+.show-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.show-card {
+  display: grid;
+  grid-template-columns: 120px 1fr auto;
+  align-items: center;
+  gap: 24px;
+  padding: 24px;
+  background: var(--bg-panel);
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  transition: all 0.3s ease;
+}
+
+.show-card:hover {
+  transform: translateX(8px);
+  border-color: rgba(255, 61, 46, 0.3);
+  box-shadow: -4px 0 20px rgba(255, 61, 46, 0.1);
+}
+
+.show-date {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.6rem;
+  color: var(--accent);
+  text-align: center;
+}
+
+.show-date span {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.show-info h3 {
+  font-size: 1.2rem;
+  margin-bottom: 4px;
+}
+
+.show-info p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+/* ========== MUSIC SECTION ========== */
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.video-card {
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--bg-panel);
+  border: 1px solid var(--line);
+  transition: all 0.3s ease;
+}
+
+.video-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  border-color: var(--accent);
+}
+
+.video-wrapper {
+  position: relative;
+  padding-top: 56.25%; /* 16:9 */
+  overflow: hidden;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* ========== REPERTOIRE SECTION ========== */
+.repertoire-filters {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 8px 16px;
+  border-radius: 20px;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.filter-btn:hover, .filter-btn.active {
+  color: var(--text);
+  background: rgba(255, 61, 46, 0.2);
+  border-color: var(--accent);
+}
+
+.chip-container {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.chip {
+  padding: 10px 18px;
+  background: var(--bg-panel);
+  border-radius: 24px;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.chip:hover {
+  transform: scale(1.05);
+  background: rgba(255, 61, 46, 0.15);
+}
+
+/* ========== ABOUT SECTION ========== */
+.about-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.about-text p {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+}
+
+/* Members */
+.member-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+}
+
+.member-card {
+  text-align: center;
+  padding: 24px;
+  background: var(--bg-panel);
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  transition: all 0.3s ease;
+}
+
+.member-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  border-color: var(--accent);
+}
+
+.member-avatar {
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--accent), #9333ea);
+}
+
+.member-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ========== GALLERY SECTION ========== */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.gallery-item {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  aspect-ratio: 4/3;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.1);
+}
+
+.gallery-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  display: flex;
+  align-items: flex-end;
+  padding: 16px;
+}
+
+.gallery-item:hover .gallery-overlay {
+  opacity: 1;
+}
+
+/* ========== CONTACT SECTION ========== */
+.contact-wrapper {
+  max-width: 540px;
+  margin-inline: auto;
+}
+
+.form-field {
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.form-input, .form-textarea {
+  width: 100%;
+  padding: 16px;
+  background: var(--bg-panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-input:focus, .form-textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(255, 61, 46, 0.1);
+}
+
+/* ========== FOOTER ========== */
+.footer {
+  padding: 32px 0;
+  text-align: center;
+  border-top: 1px solid var(--line);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .menu-toggle { display: flex; }
+  
+  .nav-links {
+    position: fixed;
+    top: var(--nav-h);
+    left: 0;
+    right: 0;
+    background: var(--bg-dark);
+    padding: 24px;
+    flex-direction: column;
+    gap: 8px;
+    transform: translateY(-100%);
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
+  
+  .nav-links.open {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  
+  .show-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  
+  .about-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ========== SCROLL PROGRESS BAR ========== */
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--accent);
+  z-index: 200;
+  transition: width 0.1s linear;
+}
+
+/* ========== SCROLL TO TOP BUTTON ========== */
+.scroll-top {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+  z-index: 100;
+}
+
+.scroll-top.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav class="nav">
+<!-- Scroll progress -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- Navigation -->
+<nav class="nav" id="navbar">
   <div class="wrap">
     <a href="#" class="brand">Withered Roses</a>
-    <ul>
-      <li><a href="#hero">Home</a></li>
-      <li><a href="#shows">Shows</a></li>
-      <li><a href="#music">Music</a></li>
-      <li><a href="#repertoire">Repertoire</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#gallery">Gallery</a></li>
-      <li><a href="#contact">Contact</a></li>
+    
+    <button class="menu-toggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+
+    <ul class="nav-links">
+      <li><a href="#hero" class="nav-link active">Home</a></li>
+      <li><a href="#shows" class="nav-link">Shows</a></li>
+      <li><a href="#music" class="nav-link">Music</a></li>
+      <li><a href="#repertoire" class="nav-link">Repertoire</a></li>
+      <li><a href="#about" class="nav-link">About</a></li>
+      <li><a href="#gallery" class="nav-link">Gallery</a></li>
+      <li><a href="#contact" class="nav-link">Contact</a></li>
     </ul>
   </div>
 </nav>
 
-<!-- HERO -->
-<section id="hero">
-  <div class="hero-inner">
-    <h1 class="display">Withered Roses</h1>
-    <p class="hero-tagline">Rock, Heavy metal, anything really</p>
+<!-- Hero Section -->
+<section id="hero" class="hero">
+  <div class="hero-bg">
+    <div class="hero-gradient-1"></div>
+    <div class="hero-gradient-2"></div>
+    <div class="hero-grid"></div>
+  </div>
+
+  <!-- Floating particles added via JS -->
+
+  <div class="wrap hero-content">
+    <h1 class="hero-title display">Withered Roses</h1>
+    <p class="hero-tagline">Rock, Heavy Metal & Everything in Between</p>
     <div class="hero-cta">
-      <a href="#contact" class="btn btn-primary">Get Tickets</a>
+      <a href="#shows" class="btn btn-primary">See Our Shows</a>
       <a href="#music" class="btn btn-ghost">Listen Now</a>
     </div>
   </div>
 </section>
 
-<!-- SHOWS -->
-<section id="shows">
-  <h2 class="display">Upcoming Shows</h2>
-  <div class="show-row">
-    <span class="show-date">18/12, 2026</span>
-    <div>
-      <h3>Kapodistrias Museum</h3>
-      <p>Corfu, Town</p>
-    </div>
-    <a href="#" class="btn btn-primary">Buy Tickets</a>
-  </div>
-  <div class="show-row">
-    <span class="show-date">31/2, 2027</span>
-    <div>
-      <h3>4th General Lykeum</h3>
-      <p>Corfu, Town</p>
-    </div>
-    <a href="#" class="btn btn-primary">Buy Tickets</a>
-  </div>
-</section>
+<!-- Shows Section -->
+<section id="shows" class="section reveal">
+  <div class="wrap">
+    <h2 class="display section-title">Upcoming Shows</h2>
+    <p class="section-subtitle">Catch us live on stage. Don't miss out.</p>
 
-<!-- MUSIC / VIDEOS -->
-<section id="music">
-  <h2 class="display">Music & Videos</h2>
-  <div class="video-grid">
-    <div class="video-card">
-      <iframe width="100%" height="auto" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
-    <div class="video-card">
-      <iframe width="100%" height="auto" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
-  </div>
-</section>
+    <div class="show-list stagger">
+      <article class="show-card reveal" style="--i: 0;">
+        <div class="show-date">18 DEC<span>2026</span></div>
+        <div class="show-info">
+          <h3>Kapodistrias Museum</h3>
+          <p>Corfu Town, Greece</p>
+        </div>
+        <a href="#" class="btn btn-primary" style="padding: 12px 24px;">Tickets</a>
+      </article>
 
-<!-- REPERTOIRE -->
-<section id="repertoire">
-  <h2 class="display">Repertoire</h2>
-  <div class="chip-container">
-    <span class="chip" data-decade="60s">Song 1 (60s)</span>
-    <span class="chip" data-decade="70s">Song 2 (70s)</span>
-    <span class="chip" data-decade="80s">Song 3 (80s)</span>
-    <span class="chip" data-decade="90s">Song 4 (90s)</span>
-    <span class="chip" data-decade="2000s">Song 5 (2000s)</span>
-  </div>
-</section>
+      <article class="show-card reveal" style="--i: 1;">
+        <div class="show-date">31 MAR<span>2027</span></div>
+        <div class="show-info">
+          <h3>4th General Lyceum</h3>
+          <p>Corfu Town, Greece</p>
+        </div>
+        <a href="#" class="btn btn-primary" style="padding: 12px 24px;">Tickets</a>
+      </article>
 
-<!-- ABOUT / MEMBERS -->
-<section id="about">
-  <h2 class="display">About Us</h2>
-  <p>Withered Roses is a band made by ....</p>
-  <div class="member-list">
-    <div class="member">
-      <img src="https://via.placeholder.com/150" alt="Member 1">
-      <h3>John Doe</h3>
-      <p>Drums</p>
-    </div>
-    <div class="member">
-      <img src="https://via.placeholder.com/150" alt="Member 2">
-      <h3>Kalliopi Koulouri-Nikos Andreadis</h3>
-      <p>Guitarists-Vocalists</p>
-    </div>
-    <div class="member">
-      <img src="https://via.placeholder.com/150" alt="Member 3">
-      <h3>Maurozoumis Panagiotis-Zwhra Markati</h3>
-      <p>Pianists</p>
+      <!-- Past shows in details -->
+      <details class="reveal show-more">
+        <summary>Past Shows (3)</summary>
+        <div class="show-list" style="margin-top: 16px;">
+          <div class="show-card reveal" style="--i: 2;">
+            <div class="show-date">15 OCT<span>2026</span></div>
+            <div class="show-info"><h3>Panorama Beach Bar</h3><p>Kavos, Corfu</p></div>
+          </div>
+        </div>
+      </details>
     </div>
   </div>
 </section>
 
-<!-- GALLERY -->
-<section id="gallery">
-  <h2 class="display">Gallery</h2>
-  <div class="gallery">
-    <div class="gallery-item" data-cap="Photo at Corfu, Kapodistrias Hotel">
-      <img src="https://via.placeholder.com/600x400" alt="Gallery Image 1">
-    </div>
-    <div class="gallery-item" data-cap="Behind the Scenes">
-      <img src="https://via.placeholder.com/600x400" alt="Gallery Image 2">
-    </div>
-    <div class="gallery-item" data-cap="Live Performance in ...">
-      <img src="https://via.placeholder.com/600x400" alt="Gallery Image 3">
+<!-- Music Section -->
+<section id="music" class="section reveal">
+  <div class="wrap">
+    <h2 class="display section-title">Music & Videos</h2>
+    <p class="section-subtitle">Watch our live performances and music videos.</p>
+
+    <div class="video-grid stagger">
+      <article class="video-card reveal" style="--i: 0;">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                  title="Video 1" allowfullscreen></iframe>
+        </div>
+      </article>
+
+      <article class="video-card reveal" style="--i: 1;">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                  title="Video 2" allowfullscreen></iframe>
+        </div>
+      </article>
+
+      <article class="video-card reveal" style="--i: 2;">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                  title="Video 3" allowfullscreen></iframe>
+        </div>
+      </article>
     </div>
   </div>
 </section>
 
-<!-- CONTACT FORM -->
-<section id="contact">
-  <h2 class="display">Contact Us</h2>
-  <form class="contact-form">
-    <input type="text" placeholder="Name" required>
-    <input type="email" placeholder="Email" required>
-    <textarea placeholder="Message" rows="4" required></textarea>
-    <button type="submit">Send Message</button>
-  </form>
+<!-- Repertoire Section -->
+<section id="repertoire" class="section reveal">
+  <div class="wrap">
+    <h2 class="display section-title">Repertoire</h2>
+    <p class="section-subtitle">A mix of classic rock and modern metal from the 60s to today.</p>
+
+    <div class="repertoire-filters reveal">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="covers">Covers</button>
+      <button class="filter-btn" data-filter="originals">Originals</button>
+    </div>
+
+    <div class="chip-container stagger reveal">
+      <span class="chip">Song 1 (60s)</span>
+      <span class="chip">Song 2 (70s)</span>
+      <span class="chip">Song 3 (80s)</span>
+      <span class="chip">Song 4 (90s)</span>
+      <span class="chip">Song 5 (2000s)</span>
+    </div>
+  </div>
 </section>
 
-<!-- FOOTER -->
+<!-- About Section -->
+<section id="about" class="section reveal">
+  <div class="wrap">
+    <h2 class="display section-title">About Us</h2>
+    
+    <div class="about-content stagger">
+      <div class="about-text reveal" style="--i: 0;">
+        <p>We're a band that blends classic rock with modern metal, performing covers from the 60s to today alongside our own original material. Based in Corfu, we bring high-energy live performances packed with passion and technical skill.</p>
+      </div>
+
+      <div class="member-grid reveal" style="--i: 1;">
+        <article class="member-card">
+          <div class="member-avatar">
+            <img src="https://via.placeholder.com/96x96/ff3d2e/ffffff?text=JD" alt="John Doe">
+          </div>
+          <h3>John Doe</h3>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">Drums</p>
+        </article>
+
+        <article class="member-card">
+          <div class="member-avatar">
+            <img src="https://via.placeholder.com/96x96/ff3d2e/ffffff?text=KK" alt="Kalliopi & Nikos">
+          </div>
+          <h3>Kalliopi & Nikos</h3>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">Guitars & Vocals</p>
+        </article>
+
+        <article class="member-card">
+          <div class="member-avatar">
+            <img src="https://via.placeholder.com/96x96/ff3d2e/ffffff?text=MP" alt="Maurozoumis & Zwhra">
+          </div>
+          <h3>Maurozoumis & Zwhra</h3>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">Keyboards</p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Gallery Section -->
+<section id="gallery" class="section reveal">
+  <div class="wrap">
+    <h2 class="display section-title">Gallery</h2>
+    <p class="section-subtitle">Moments from our live shows and behind the scenes.</p>
+
+    <div class="gallery-grid stagger">
+      <figure class="gallery-item reveal" style="--i: 0;" data-cap="Live at Kapodistrias Museum, Corfu">
+        <img src="https://via.placeholder.com/600x450/1a1a21/ff3d2e?text=Live+Show" alt="Live performance">
+        <div class="gallery-overlay"></div>
+      </figure>
+
+      <figure class="gallery-item reveal" style="--i: 1;" data-cap="Backstage before the show">
+        <img src="https://via.placeholder.com/600x450/1a1a21/9333ea?text=Backstage" alt="Backstage photo">
+        <div class="gallery-overlay"></div>
+      </figure>
+
+      <figure class="gallery-item reveal" style="--i: 2;" data-cap="Soundcheck at Panorama Beach Bar">
+        <img src="https://via.placeholder.com/600x450/1a1a21/ff3d2e?text=Soundcheck" alt="Soundcheck photo">
+        <div class="gallery-overlay"></div>
+      </figure>
+
+      <figure class="gallery-item reveal" style="--i: 3;" data-cap="Rehearsal at the studio">
+        <img src="https://via.placeholder.com/600x450/1a1a21/9333ea?text=Rehearsal" alt="Rehearsal photo">
+        <div class="gallery-overlay"></div>
+      </figure>
+
+      <figure class="gallery-item reveal" style="--i: 4;" data-cap="Meet & greet after the show">
+        <img src="https://via.placeholder.com/600x450/1a1a21/ff3d2e?text=Fans" alt="Fan photo">
+        <div class="gallery-overlay"></div>
+      </figure>
+
+      <figure class="gallery-item reveal" style="--i: 5;" data-cap="Recording new originals">
+        <img src="https://via.placeholder.com/600x450/1a1a21/9333ea?text=Studio" alt="Studio photo">
+        <div class="gallery-overlay"></div>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="section reveal">
+  <div class="wrap">
+    <h2 class="display section-title" style="text-align: center;">Contact Us</h2>
+    <p class="section-subtitle" style="margin-inline: auto; text-align: center;">Want to book us? Send us a message.</p>
+
+    <form class="contact-wrapper reveal">
+      <div class="form-field">
+        <input type="text" class="form-input" placeholder="Your Name" required>
+      </div>
+
+      <div class="form-field">
+        <input type="email" class="form-input" placeholder="Your Email" required>
+      </div>
+
+      <div class="form-field">
+        <textarea rows="4" class="form-textarea form-input" 
+                  placeholder="Tell us about your event..." required></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
+        Send Message
+      </button>
+    </form>
+  </div>
+</section>
+
+<!-- Footer -->
 <footer class="footer">
   <div class="wrap">
     <p>&copy; 2026 Withered Roses. All rights reserved.</p>
   </div>
 </footer>
 
+<!-- Scroll to top button -->
+<button class="scroll-top" aria-label="Scroll to top">↑</button>
+
 <script>
-// Add gallery captions
-document.querySelectorAll('.gallery-item').forEach(item => {
-  const caption = item.getAttribute('data-cap');
-  if (caption) {
-    const captionElement = document.createElement('div');
-    captionElement.className = 'gallery-caption';
-    captionElement.textContent = caption;
-    item.appendChild(captionElement);
+document.addEventListener('DOMContentLoaded', () => {
+  // Create floating particles in hero
+  const hero = document.querySelector('.hero-bg');
+  for (let i = 0; i < 30; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+    particle.style.left = Math.random() * 100 + '%';
+    particle.style.setProperty('--drift', `${(Math.random() - 0.5) * 200}px`);
+    particle.style.animationDuration = `${4 + Math.random() * 6}s`;
+    particle.style.animationDelay = `${Math.random() * 8}s`;
+    hero.appendChild(particle);
   }
+
+  // Scroll reveal with IntersectionObserver
+  const revealElements = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  revealElements.forEach(el => observer.observe(el));
+
+  // Scroll progress bar
+  const progressBar = document.getElementById('progressBar');
+  window.addEventListener('scroll', () => {
+    const scrollPercentage = (window.scrollY / 
+      (document.body.scrollHeight - window.innerHeight)) * 100;
+    progressBar.style.width = scrollPercentage + '%';
+  });
+
+  // Scroll to top button visibility
+  const scrollTopBtn = document.querySelector('.scroll-top');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 500) {
+      scrollTopBtn.classList.add('visible');
+    } else {
+      scrollTopBtn.classList.remove('visible');
+    }
+  });
+
+  scrollTopBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // Active nav link on scroll (scroll spy)
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  function setActiveNav() {
+    let currentSection = '';
+    
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop - 100;
+      if (window.scrollY >= sectionTop) {
+        currentSection = '#' + section.getAttribute('id');
+      }
+    });
+
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === currentSection) {
+        link.classList.add('active');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', setActiveNav);
+
+  // Mobile menu toggle
+  const menuToggle = document.querySelector('.menu-toggle');
+  const navLinksList = document.querySelector('.nav-links');
+
+  menuToggle.addEventListener('click', () => {
+    navLinksList.classList.toggle('open');
+  });
+
+  // Close mobile menu when a link is clicked
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      navLinksList.classList.remove('open');
+    });
+  });
 });
 </script>
 
