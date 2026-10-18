@@ -1097,15 +1097,38 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+   // Keys must match each card's <h3> text exactly.
   const members = {
-    'John Doe': { role: 'Drums & winds', desc: 'Short Description.', social: { Instagram: '', Instagram: 'https://www.instagram.com/efikourkoulou_?psln=MXZ6ZnRlbHV2enhhOQ%3D%3D&utm_source=qr' } },
-    'Kalliopi & Nikos': { role: 'Guitars & Vocals', desc: 'Short description.', social: { Instagram: 'https://www.instagram.com/kallikoulouri?xtok=ajRlenZpNXVnZHRu', Instagram: 'https://www.instagram.com/s0me.thingreal?xtok=b3pzbXlxdWo5OXB3' } },
-    'Maurozoumis & Zwhra': { role: 'Keyboards', desc: 'THE PIANO IS THE CORE.', social: { Instagram: 'https://www.instagram.com/_zoeera.markati_?srtk=MnozdGUyNnhtdGc4&utm_source=qr', Instagram: 'https://www.instagram.com/panagiotis_mvrz?srtk=MTl6cmQ4YmJram0zcQ%3D%3D&utm_source=qr' } }
+    'John Doe & Efi Kourkoulou': { role: 'Drums & Winds', desc: 'Short Description.', social: [
+      { label: 'Efi on Instagram', url: 'https://www.instagram.com/efikourkoulou_?psln=MXZ6ZnRlbHV2enhhOQ%3D%3D&utm_source=qr' }
+      // Add John's link here, e.g. { label: 'John on Instagram', url: '...' }
+    ] },
+    'Kalli & Nikos': { role: 'Guitars & Vocals', desc: 'Short description.', social: [
+      { label: 'Kalli on Instagram', url: 'https://www.instagram.com/kallikoulouri?xtok=ajRlenZpNXVnZHRu' },
+      { label: 'Nikos on Instagram', url: 'https://www.instagram.com/s0me.thingreal?xtok=b3pzbXlxdWo5OXB3' }
+    ] },
+    'Maurozoumis & Zwhra': { role: 'Keyboards', desc: 'THE PIANO IS THE CORE.', social: [
+      { label: 'Zwhra on Instagram', url: 'https://www.instagram.com/_zoeera.markati_?srtk=MnozdGUyNnhtdGc4&utm_source=qr' },
+      { label: 'Maurozoumis on Instagram', url: 'https://www.instagram.com/panagiotis_mvrz?srtk=MTl6cmQ4YmJram0zcQ%3D%3D&utm_source=qr' }
+    ] }
   };
 
   const modal = document.getElementById('member-modal');
   const closeModal = () => modal.classList.remove('open');
 
+  document.querySelectorAll('.member-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const name = card.querySelector('h3').textContent;
+      const m = members[name];
+      if (!m) return;
+      document.getElementById('modal-name').textContent = name;
+      document.getElementById('modal-role').textContent = m.role;
+      document.getElementById('modal-desc').textContent = m.desc;
+      document.getElementById('modal-social').innerHTML = m.social
+        .map(s => `<a href="${s.url}" target="_blank" rel="noopener">${s.label}</a>`).join('');
+      modal.classList.add('open');
+    });
+  });
   document.querySelectorAll('.member-card').forEach(card => {
     card.addEventListener('click', () => {
       const name = card.querySelector('h3').textContent;
