@@ -1129,19 +1129,6 @@ document.addEventListener('DOMContentLoaded', () => {
       modal.classList.add('open');
     });
   });
-  document.querySelectorAll('.member-card').forEach(card => {
-    card.addEventListener('click', () => {
-      const name = card.querySelector('h3').textContent;
-      const m = members[name];
-      if (!m) return;
-      document.getElementById('modal-name').textContent = name;
-      document.getElementById('modal-role').textContent = m.role;
-      document.getElementById('modal-desc').textContent = m.desc;
-      document.getElementById('modal-social').innerHTML = Object.entries(m.social)
-        .map(([n, url]) => `<a href="${url}" target="_blank" rel="noopener">${n}</a>`).join('');
-      modal.classList.add('open');
-    });
-  });
 
   modal.querySelector('.modal-close').addEventListener('click', closeModal);
   modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
