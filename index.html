@@ -186,8 +186,10 @@ h1, h2, h3, .display {
   gap: 5px;
   cursor: pointer;
   padding: 8px;
+  background: none;
+  border: none;
 }
-
+  
 .menu-toggle span {
   width: 24px;
   height: 2px;
@@ -650,13 +652,17 @@ h1, h2, h3, .display {
     gap: 8px;
     transform: translateY(-100%);
     opacity: 0;
+    visibility: hidden;
     transition: all 0.3s ease;
   }
-  
+
   .nav-links.open {
     transform: translateY(0);
     opacity: 1;
+    visibility: visible;
   }
+
+  .nav-link { display: block; }
   
   .show-card {
     grid-template-columns: 1fr;
