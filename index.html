@@ -168,7 +168,7 @@ h1, h2, h3, .display {
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-size: 0.9rem;
-  color: var(--text-muted);
+  color: var(--text);
   padding: 8px 14px;
   border-radius: 6px;
   transition: all 0.3s ease;
@@ -703,6 +703,40 @@ h1, h2, h3, .display {
   opacity: 1;
   transform: translateY(0);
 }
+.member-card { cursor: pointer; }
+.member-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  z-index: 300;
+  align-items: center;
+  justify-content: center;
+}
+.member-modal.open { display: flex; }
+.member-modal-content {
+  background: var(--bg-panel);
+  padding: 32px;
+  border-radius: 16px;
+  max-width: 480px;
+  width: 90%;
+  position: relative;
+  border: 1px solid var(--line);
+}
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+.modal-role { color: var(--accent); font-family: 'Oswald', sans-serif; text-transform: uppercase; }
+.modal-social { display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+.modal-social a { color: var(--text-muted); transition: color 0.3s; }
+.modal-social a:hover { color: var(--accent); }
 </style>
 </head>
 <body>
@@ -959,6 +993,16 @@ h1, h2, h3, .display {
 <!-- Scroll to top button -->
 <button class="scroll-top" aria-label="Scroll to top">↑</button>
 
+<div id="member-modal" class="member-modal">
+  <div class="member-modal-content">
+    <button class="modal-close">&times;</button>
+    <h3 id="modal-name"></h3>
+    <p id="modal-role" class="modal-role"></p>
+    <p id="modal-desc"></p>
+    <div id="modal-social" class="modal-social"></div>
+  </div>
+</div>
+
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   // Create floating particles in hero
@@ -1046,6 +1090,33 @@ document.addEventListener('DOMContentLoaded', () => {
       navLinksList.classList.remove('open');
     });
   });
+
+  const members = {
+    'John Doe': { role: 'Drums', desc: '15 years in heavy metal and rock bands across Europe.', social: { Instagram: 'https://instagram.com/johndoe_drums', YouTube: 'https://youtube.com/@JohnDoeDrums' } },
+    'Kalliopi & Nikos': { role: 'Guitars & Vocals', desc: 'Creative force behind Withered Roses, blending classic rock with modern metal.', social: { Instagram: 'https://instagram.com/withered_roses', Spotify: 'https://open.spotify.com' } },
+    'Maurozoumis & Zwhra': { role: 'Keyboards', desc: 'Adding depth and texture to every performance.', social: { Instagram: 'https://instagram.com/keys_wr', Facebook: 'https://facebook.com/WitheredRosesKeys' } }
+  };
+
+  const modal = document.getElementById('member-modal');
+  const closeModal = () => modal.classList.remove('open');
+
+  document.querySelectorAll('.member-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const name = card.querySelector('h3').textContent;
+      const m = members[name];
+      if (!m) return;
+      document.getElementById('modal-name').textContent = name;
+      document.getElementById('modal-role').textContent = m.role;
+      document.getElementById('modal-desc').textContent = m.desc;
+      document.getElementById('modal-social').innerHTML = Object.entries(m.social)
+        .map(([n, url]) => `<a href="${url}" target="_blank" rel="noopener">${n}</a>`).join('');
+      modal.classList.add('open');
+    });
+  });
+
+  modal.querySelector('.modal-close').addEventListener('click', closeModal);
+  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 });
 </script>
 
